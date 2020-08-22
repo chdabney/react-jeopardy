@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import JeopardyDisplay from "../jeopardyDisplay/JeopardyDisplay";
 //import our service
 import JeopardyService from "../../jeopardyService";
 class Jeopardy extends Component {
@@ -76,17 +77,17 @@ class Jeopardy extends Component {
       return <div>Loading...</div>;
     }
 
-    if (this.state.submitted === true && this.state.correct === true) {
+    if (this.state.submitted && this.state.correct) {
       return (
-        <div className="Contact">
+        <div className="answer">
           <p>Correct!</p>
           <button onClick={this.resetForm}>Next Question</button>
         </div>
       );
-    } else if (this.state.submitted === true && this.state.correct === false) {
+    } else if (this.state.submitted && this.state.correct === false) {
       return (
-        <div className="Contact">
-          <p>Wrong!!</p>
+        <div className="answer">
+          <p>Wrong!</p>
           <button onClick={this.resetForm}>Next Question</button>
         </div>
       );
@@ -99,23 +100,15 @@ class Jeopardy extends Component {
       const questionCategory = this.state.data.category.title;
       return (
         <div>
-          <h2>Category: {questionCategory}</h2>
-          <h2>{pointValue} points</h2>
-          <h3>{currentQuestion}</h3>
-          <h4>Current Score: {this.state.score}</h4>
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <label htmlFor="answer"></label>
-              <input
-                type="text"
-                name="answer"
-                placeholder="Answer..."
-                value={this.state.formData.answer}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button>Submit Answer</button>
-          </form>
+          <JeopardyDisplay
+            category={questionCategory}
+            points={pointValue}
+            question={currentQuestion}
+            currentScore={this.state.score}
+            value={this.state.formData.answer}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
         </div>
       );
     }
