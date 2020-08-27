@@ -17,7 +17,7 @@ body {
 
 .App {
   background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0 ,0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   padding: 1rem 2rem;
 }
 
@@ -30,15 +30,15 @@ label {
 }
 
 input {
-  border: 1px solid rgba(0, 0 ,0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   font-size: 1rem;
   padding: 4px;
 }
 
 button {
-  background: #7067CFAA;
+  background: #7067cfaa;
   padding: 4px;
-  border: 1px solid rgba(0, 0 ,0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   color: white;
   font-size: 1rem;
   width: 100%;

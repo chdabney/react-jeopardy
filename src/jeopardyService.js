@@ -1,7 +1,10 @@
 //import the axios HTTP client to communicate with the API
 import axios from "axios";
 class JeopardyService {
-  constructor(url = "http://jservice.io/api/random", client = axios.create()) {
+  constructor(
+    url = "http://jservice.io/api/random?count=3",
+    client = axios.create()
+  ) {
     this.url = url;
     this.client = client;
   }

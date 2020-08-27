@@ -8,13 +8,13 @@ class Jeopardy extends Component {
     super(props);
     this.client = new JeopardyService();
     this.state = {
-      data: {},
+      data: { category: "" },
       score: 0,
-      correct: false,
-      submitted: false,
+      categorySelected: false,
       formData: {
         answer: "",
       },
+      questions: [],
     };
   }
   //get a new random question from the API and add it to the data object in state
@@ -22,6 +22,7 @@ class Jeopardy extends Component {
     return this.client.getQuestion().then((result) => {
       this.setState({
         data: result.data[0],
+        questions: result.data,
       });
     });
   }
@@ -40,16 +41,7 @@ class Jeopardy extends Component {
     event.preventDefault();
     this.checkAnswer();
     this.setState({
-      submitted: true,
-    });
-  };
-
-  resetForm = (event) => {
-    this.setState({
-      submitted: false,
-      formData: {
-        answer: "",
-      },
+      categorySelected: false,
     });
     this.getNewQuestion();
   };
@@ -60,58 +52,48 @@ class Jeopardy extends Component {
       this.state.data.answer.toLowerCase()
     ) {
       this.setState((state, props) => ({
-        correct: true,
         score: (state.score += this.state.data.value),
+        formData: {
+          answer: "",
+        },
       }));
     } else {
       this.setState((state, props) => ({
-        correct: false,
         score: (state.score -= this.state.data.value),
+        formData: {
+          answer: "",
+        },
       }));
     }
   }
 
+  categorySelect = (event) => {
+    this.setState({
+      categorySelected: true,
+    });
+  };
+
   //display the results on the screen
   render() {
-    if (this.state.data.category === undefined) {
-      return <div>Loading...</div>;
-    }
-
-    if (this.state.submitted && this.state.correct) {
-      return (
-        <div className="answer">
-          <p>Correct!</p>
-          <button onClick={this.resetForm}>Next Question</button>
-        </div>
-      );
-    } else if (this.state.submitted && this.state.correct === false) {
-      return (
-        <div className="answer">
-          <p>Wrong!</p>
-          <button onClick={this.resetForm}>Next Question</button>
-        </div>
-      );
-    } else {
-      console.log(this.state.data);
-      console.log(this.state.formData.answer);
-
-      const currentQuestion = this.state.data.question;
-      const pointValue = this.state.data.value;
-      const questionCategory = this.state.data.category.title;
-      return (
-        <div>
+    return (
+      <div>
+        {this.state.questions.map((questionObject, index) => (
           <JeopardyDisplay
-            category={questionCategory}
-            points={pointValue}
-            question={currentQuestion}
-            currentScore={this.state.score}
+            key={index}
+            question={questionObject.question}
+            category={questionObject.category.title}
+            points={questionObject.value}
+            categoryData={questionObject.category}
             value={this.state.formData.answer}
+            categorySelected={this.state.categorySelected}
+            currentScore={this.state.score}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            categorySelect={this.categorySelect}
           />
-        </div>
-      );
-    }
+        ))}
+      </div>
+    );
   }
 }
 
