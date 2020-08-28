@@ -1,0 +1,21 @@
+* {
+  margin: 10px;
+}
+
+.questionDisplay {
+  max-width: 400px;
+  max-height: 400px;
+  overflow: none;
+  margin: 20px;
+}
+
+.categories {
+  width: 200px;
+  height: 200px;
+  overflow: none;
+  margin: 20px;
+}
+
+.hidden {
+  display: none;
+}

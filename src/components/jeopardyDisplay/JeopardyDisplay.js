@@ -1,44 +1,43 @@
 import React from "react";
+import "../jeopardyDisplay/JeopardyDisplay.css";
 
 function JeopardyDisplay(props) {
   if (props.categoryData === undefined) {
     return <div>Loading...</div>;
   }
 
-  if (!props.categorySelected) {
+  if (!props.selected) {
     return (
       <div>
-        <h4>Current Score: {props.currentScore}</h4>
-        <div className="categoryDisplay">
-          <div className="categories">
-            <h1>{props.category} </h1>
-            <button onClick={props.categorySelect}>Select Category</button>
+        <div className="categories">
+          <div>
+            <h2>{props.category} </h2>
           </div>
         </div>
+        <button className="categoryButton" onClick={props.categorySelect}>
+          Select Category
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="JeopardyDisplay">
-      <div>
+    <div>
+      <div className="questionDisplay">
         <h4>Current Score: {props.currentScore}</h4>
         <h2>{props.points} points</h2>
         <h3>{props.question}</h3>
-        <form onSubmit={props.handleSubmit}>
-          <div>
-            <label htmlFor="answer"></label>
-            <input
-              type="text"
-              name="answer"
-              placeholder="Answer..."
-              value={props.answer}
-              onChange={props.handleChange}
-            />
-          </div>
-          <button>Submit Answer</button>
-        </form>
+
+        <label htmlFor="answer"></label>
+        <input
+          type="text"
+          name="answer"
+          placeholder="Answer..."
+          value={props.answer}
+          onChange={props.handleChange}
+        />
       </div>
+      <button onClick={props.handleSubmit}>Submit Answer</button>
     </div>
   );
 }
